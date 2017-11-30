@@ -97,4 +97,22 @@ public class Manejador {
                 }
     }
     
+    public void ImprimirMemVirtual(){
+    
+                 if (this.nroProcesos==0){
+            
+            //skip
+        }
+        else{
+        int i=0;
+        while(i<this.procesos.size())
+         {
+             
+             
+          i++;   
+         }
+    }  
+        
+    }
+    
 }
