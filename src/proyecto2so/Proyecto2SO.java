@@ -15,7 +15,7 @@ public class Proyecto2SO {
     public static void main(String[] args) {
         
         Interfaz I=new Interfaz();
-        I.Go();
+        I.start();
         
     }
     

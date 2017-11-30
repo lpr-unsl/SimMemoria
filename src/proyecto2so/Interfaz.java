@@ -35,9 +35,9 @@ public class Interfaz extends JFrame implements ActionListener{
     //--------------------------
     JPanel panelEast= new JPanel();
     //Componentes de panelEast
-    JButton crearMarco=new JButton("crear marcos");
+    
     JLabel label0=new JLabel("MEMORIA RAM");//Letrerito memoria RAM
-    JTextArea textarea1=new JTextArea("Introduzca el nro de marcos que desea para la memoria ppal:_"); //textarea RAM
+    JTextArea textarea1=new JTextArea(""); //textarea RAM
     JScrollPane scrollpane1= new JScrollPane(textarea1,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     //---------------------------
@@ -85,6 +85,24 @@ public class Interfaz extends JFrame implements ActionListener{
     JTextArea textarea15=new JTextArea("CREAR PROCESO VA AQUI");//Para crear el proceso...
     JButton crearProceso=new JButton("crear proceso");
     
+    //------Inicio------------------------------
+      JPanel inicio=new JPanel();
+      JTextArea textarea00=new JTextArea("Introduzca el nro de marcos que desea en memoria ppal:_");
+      JButton crearMarco=new JButton("crear marcos");
+      JLabel inicioLabel=new JLabel("Inicio");
+    //---------------------------------------------  
+    public void start(){
+          setSize(600,400);
+	  setResizable(true);
+          setDefaultCloseOperation(EXIT_ON_CLOSE);
+          this.inicio.setLayout(new GridLayout(3,1));
+          this.inicio.add(inicioLabel);
+          this.inicio.add(textarea00);
+          this.inicio.add(crearMarco);
+          this.crearMarco.addActionListener(this);
+          add(this.inicio);
+          setVisible(true);
+    }
     public void Go(){
                    
                 setSize(600,400);
@@ -99,7 +117,6 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelEast.setLayout(new BorderLayout());
                 this.panelEast.add(label0,BorderLayout.PAGE_START);
                 this.panelEast.add(scrollpane1,BorderLayout.CENTER);
-                this.panelEast.add(crearMarco,BorderLayout.PAGE_END);
                 //-------------------------------------------
                 //---PANEL CENTER----------------------------
                 this.panelCenter.setLayout(new GridLayout(2,1));
@@ -159,17 +176,23 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelWest.add(starGrid, BorderLayout.PAGE_START);
                 this.panelWest.add(westCenter, BorderLayout.CENTER);
                 this.panelWest.add(westPageEnd,BorderLayout.PAGE_END);
-                
+             
                 //-------------------------------------------------
                 add(this.panelppal);
                 setVisible(true);
   
     }
+   
+    
     
     @Override
     public void actionPerformed(ActionEvent e){
 		Object src=e.getSource();
-	
+	        if (src.equals(crearMarco)){
+                       inicio.setVisible(false);
+                       this.Go();
+                    
+                }
                 
         }
 }
