@@ -28,6 +28,11 @@ import javax.swing.JTextArea;
  */
 public class Interfaz extends JFrame implements ActionListener{
     
+    //------manejador de memoria--------
+     Manejador manejador;
+     JTextArea[] marcos;
+    //--------------------------------------
+    
     JPanel panelppal= new JPanel();
    
 
@@ -62,17 +67,25 @@ public class Interfaz extends JFrame implements ActionListener{
       JScrollPane scrollpane3= new JScrollPane(textarea9,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     //Componentes de panelWest
+      
+     JTextArea[] ids;
+     JTextArea[] totalpgs;
+     JTextArea[] totalrams;
+     JTextArea[] nrodiscos;
+     JTextArea[] estados;  
+      
+      
     JLabel label6= new JLabel("Lista de Procesos");//Letrerito que dice lista de procesos
     JLabel label7=new JLabel("ID");//columna id de lista de procesos--letrerito
     JLabel label8=new JLabel("#Total pg");//columna lista de procesos letrero paginas totales
     JLabel label9=new JLabel("#Pag RAM");//columna lista de procesos letrero paginas en memoria
     JLabel label10=new JLabel("#Pag Disco");//columna lista de procesos paginas en memoria virtual
     JLabel label11=new JLabel("Estado");//columna lista de procesos Estado
-    JTextArea textarea10=new JTextArea(); //lista de procesos, columna ID
-    JTextArea textarea11=new JTextArea(); //lista de procesos columna paginas totales
-    JTextArea textarea12=new JTextArea(); //lista de procesos columna paginas en memoria
-    JTextArea textarea13=new JTextArea();// lista de procesos columna paginas en memoria virtual
-    JTextArea textarea14=new JTextArea();// lista de procesos columna estado.
+    JTextArea textarea10=new JTextArea("\n"); //lista de procesos, columna ID
+    JTextArea textarea11=new JTextArea("\n"); //lista de procesos columna paginas totales
+    JTextArea textarea12=new JTextArea("\n"); //lista de procesos columna paginas en memoria
+    JTextArea textarea13=new JTextArea("\n");// lista de procesos columna paginas en memoria virtual
+    JTextArea textarea14=new JTextArea("\n");// lista de procesos columna estado.
     JScrollPane scrollpane4= new JScrollPane(textarea10,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     JScrollPane scrollpane5= new JScrollPane(textarea11,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
@@ -89,7 +102,7 @@ public class Interfaz extends JFrame implements ActionListener{
     
     //------Inicio------------------------------
       JPanel inicio=new JPanel();
-      JTextArea textarea00=new JTextArea();
+      JTextArea textarea00=new JTextArea("");
       JButton crearMarco=new JButton("crear marcos");
       JLabel inicioLabel=new JLabel("Introduzca el nro de marcos que desea en memoria ppal");
     //---------------------------------------------  
@@ -119,7 +132,7 @@ public class Interfaz extends JFrame implements ActionListener{
           setVisible(true);
     }
     public void Go(int nroMarcos){
-                   
+                manejador=new Manejador(nroMarcos,this);
                 setSize(600,400);
 	 	setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -129,14 +142,15 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelppal.add(panelCenter);
                 this.panelppal.add(panelWest);
                 //---PANEL EAST------------------------------
-                JTextArea[] marcos=new JTextArea[nroMarcos];
+              
+                this.marcos=new JTextArea[nroMarcos];
                 int i=0;
                 while(i<nroMarcos){
                 marcos[i]=new JTextArea("marco "+i);
                 marcos[i].setEditable(true);
 		marcos[i].setLineWrap(true);
 		marcos[i].setWrapStyleWord(true);
-                marcos[i].setFont(new Font("Arial ", Font.BOLD, 18));
+                marcos[i].setFont(new Font("Arial ", Font.BOLD,12));
                 marcos[i].setBorder(BorderFactory.createLineBorder(Color.black));
                 marcos[i].setBackground(Color.white);
                 marcos[i].setForeground(Color.black);
@@ -144,6 +158,8 @@ public class Interfaz extends JFrame implements ActionListener{
                 }
                 JPanel ram=new JPanel();
                 ram.setLayout(new GridLayout(nroMarcos,1));
+                JScrollPane ramScroll= new JScrollPane(ram,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+                ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 this.panelEast.setLayout(new BorderLayout());
                 this.panelEast.add(label0,BorderLayout.PAGE_START);
                 i=0;
@@ -151,7 +167,7 @@ public class Interfaz extends JFrame implements ActionListener{
                      ram.add(marcos[i]);
                      i++;
                 }
-                 this.panelEast.add(ram,BorderLayout.CENTER);
+                 this.panelEast.add(ramScroll,BorderLayout.CENTER);
                 //-------------------------------------------
                 //---PANEL CENTER----------------------------
                 this.panelCenter.setLayout(new GridLayout(2,1));
@@ -198,11 +214,82 @@ public class Interfaz extends JFrame implements ActionListener{
                 starGrid.add(starGridFiladeAbajo);
                 JPanel westCenter= new JPanel();
                 westCenter.setLayout(new GridLayout(1,5));
-                westCenter.add(scrollpane4);
-                westCenter.add(scrollpane5);
-                westCenter.add(scrollpane6);
-                westCenter.add(scrollpane7);
-                westCenter.add(scrollpane8);
+               
+                
+                
+                JPanel id=new JPanel();
+                JPanel totalpg=new JPanel();
+                JPanel totalram=new JPanel();
+                JPanel nrodisco=new JPanel();
+                JPanel estado=new JPanel();
+                
+                JScrollPane scrollid= new JScrollPane(id,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+               ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane scrolltotalpg= new JScrollPane(totalpg,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+               ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane scrolltotalram= new JScrollPane(totalram,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+               ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane scrollnrodisco= new JScrollPane(nrodisco,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+               ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane scrollestado= new JScrollPane(estado,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+               ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                
+                id.setLayout(new GridLayout(100,1));
+                totalpg.setLayout(new GridLayout(100,1));
+                totalram.setLayout(new GridLayout(100,1));
+                nrodisco.setLayout(new GridLayout(100,1));
+                estado.setLayout(new GridLayout(100,1));
+                int j=0;
+                ids=new JTextArea[100];
+                totalpgs=new JTextArea[100];
+                totalrams=new JTextArea[100];
+                nrodiscos=new JTextArea[100];
+                estados=new JTextArea[100];
+                while (j<100)
+                {
+                  ids[j]=new JTextArea();
+                  totalpgs[j]=new JTextArea();
+                  totalrams[j]=new JTextArea();
+                  nrodiscos[j]=new JTextArea();
+                  estados[j]=new JTextArea();
+                  ids[j].setEditable(true);
+		  ids[j].setLineWrap(true);
+		  ids[j].setWrapStyleWord(true);
+                  ids[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  ids[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                  totalpgs[j].setEditable(true);
+		  totalpgs[j].setLineWrap(true);
+		  totalpgs[j].setWrapStyleWord(true);
+                  totalpgs[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  totalpgs[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                  totalrams[j].setEditable(true);
+		  totalrams[j].setLineWrap(true);
+		  totalrams[j].setWrapStyleWord(true);
+                  totalrams[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  totalrams[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                  nrodiscos[j].setEditable(true);
+		  nrodiscos[j].setLineWrap(true);
+		  nrodiscos[j].setWrapStyleWord(true);
+                  nrodiscos[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  nrodiscos[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                  estados[j].setEditable(true);
+		  estados[j].setLineWrap(true);
+		  estados[j].setWrapStyleWord(true);
+                  estados[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  estados[j].setForeground(Color.blue);
+                  estados[j].setBorder(BorderFactory.createLineBorder(Color.black));
+                  id.add(ids[j]);
+                  totalpg.add(totalpgs[j]);
+                  totalram.add(totalrams[j]);
+                  nrodisco.add(nrodiscos[j]);
+                  estado.add(estados[j]);
+                  j++;
+                }
+                westCenter.add(scrollid);
+                westCenter.add(scrolltotalpg);
+                westCenter.add(scrolltotalram);
+                westCenter.add(scrollnrodisco);
+                westCenter.add(scrollestado);
                 JPanel westPageEnd=new JPanel();
                 westPageEnd.setLayout(new BorderLayout());
                 westPageEnd.add(label12, BorderLayout.PAGE_START);
@@ -211,11 +298,19 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelWest.add(starGrid, BorderLayout.PAGE_START);
                 this.panelWest.add(westCenter, BorderLayout.CENTER);
                 this.panelWest.add(westPageEnd,BorderLayout.PAGE_END);
-             
-                //-------------------------------------------------
+                //--------Configuracion de todos los botones--------------------
+                this.crearProceso.addActionListener(this);
+                //--------Configuracion de todos los textarea-------------------
+                this.textarea15.setEditable(true);
+		this.textarea15.setLineWrap(true);
+		this.textarea15.setWrapStyleWord(true);
+                this.textarea15.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea15.setBorder(BorderFactory.createLineBorder(Color.black));
+                //--------------------------------------------------------------------
+                
                 add(this.panelppal);
                 setVisible(true);
-  
+                
     }
    
     
@@ -224,11 +319,25 @@ public class Interfaz extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 		Object src=e.getSource();
 	        if (src.equals(crearMarco)){
-                       inicio.setVisible(false);
+                       
                        String s=textarea00.getText();
-                       int n=Integer.parseInt(s);
+                       int n;
+                       if (s.equals("")){
+                           this.textarea00.setText("Como no coloco nada, se crearan 10 marcos");
+                           n=10;
+                       }
+                       else
+                       {                           
+                       n=Integer.parseInt(s);
+                       }
+                       inicio.setVisible(false);
                        this.Go(n);
                     
+                }
+                if (src.equals(crearProceso)){
+                       this.manejador.crearProceso();
+                       this.manejador.ImprimirProcesos();
+                      
                 }
                 
         }
