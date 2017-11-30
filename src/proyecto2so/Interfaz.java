@@ -50,6 +50,11 @@ public class Interfaz extends JFrame implements ActionListener{
     //---------------------------
     JPanel panelCenter= new JPanel();
     //Componentes de panelCenter
+    JPanel virtualid=new JPanel();//columna id de la pantalla memoria virtual
+    JPanel virtualpag=new JPanel();//columna pag de la pantalla memoria virtual
+    JTextArea[] virtualids;
+    JTextArea[] virtualpags;
+    
     JTextArea textarea2=new JTextArea("Ejecutado:_ P11"); //Pantalla procesador
     JPanel panelWest=new JPanel();
     JButton siguiente=new JButton("siguiente");//ejecutar siguiente proceso en la cola de listos
@@ -62,9 +67,9 @@ public class Interfaz extends JFrame implements ActionListener{
     JLabel label5=new JLabel("#Pagina");//Letrerito de tabla memoria virtual
     JTextArea textarea8=new JTextArea("");//Pantalla columna ID memoria virtual
     JTextArea textarea9=new JTextArea("");//Pantall nro pagina memoria virtual
-     JScrollPane scrollpane2= new JScrollPane(textarea8,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+     JScrollPane scrollpane2= new JScrollPane(virtualid,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      JScrollPane scrollpane3= new JScrollPane(textarea9,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+      JScrollPane scrollpane3= new JScrollPane(virtualpag,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     //Componentes de panelWest
       
@@ -193,7 +198,33 @@ public class Interfaz extends JFrame implements ActionListener{
                 center2Grid2.add(label5);
                 JPanel center2center=new JPanel();
                 center2center.setLayout(new GridLayout(1,2));
-                center2center.add(scrollpane2);
+                virtualid.setLayout(new GridLayout(1000,1));
+                virtualpag.setLayout(new GridLayout(1000,1));
+                virtualids=new JTextArea[1000];
+                virtualpags=new JTextArea[1000];
+                int k=0;
+                   while (k<1000)
+                {
+                  virtualids[k]=new JTextArea();
+                  virtualpags[k]=new JTextArea();
+                  
+                  virtualids[k].setEditable(true);
+		  virtualids[k].setLineWrap(true);
+		  virtualids[k].setWrapStyleWord(true);
+                  virtualids[k].setFont(new Font("Arial ", Font.BOLD, 18));
+                  virtualids[k].setBorder(BorderFactory.createLineBorder(Color.black));
+                  virtualpags[k].setEditable(true);
+		  virtualpags[k].setLineWrap(true);
+		  virtualpags[k].setWrapStyleWord(true);
+                  virtualpags[k].setFont(new Font("Arial ", Font.BOLD, 18));
+                  virtualpags[k].setBorder(BorderFactory.createLineBorder(Color.black));
+                  
+                  virtualpag.add(virtualids[k]);
+                  virtualpag.add(virtualpags[k]);
+                  k++;
+                }
+                
+                center2.add(scrollpane2);
                 center2center.add(scrollpane3);
                 center2.add(center2center, BorderLayout.CENTER);
                 this.panelCenter.add(center);
@@ -234,18 +265,18 @@ public class Interfaz extends JFrame implements ActionListener{
                 JScrollPane scrollestado= new JScrollPane(estado,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
                ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 
-                id.setLayout(new GridLayout(100,1));
-                totalpg.setLayout(new GridLayout(100,1));
-                totalram.setLayout(new GridLayout(100,1));
-                nrodisco.setLayout(new GridLayout(100,1));
-                estado.setLayout(new GridLayout(100,1));
+                id.setLayout(new GridLayout(1000,1));
+                totalpg.setLayout(new GridLayout(1000,1));
+                totalram.setLayout(new GridLayout(1000,1));
+                nrodisco.setLayout(new GridLayout(1000,1));
+                estado.setLayout(new GridLayout(1000,1));
                 int j=0;
-                ids=new JTextArea[100];
-                totalpgs=new JTextArea[100];
-                totalrams=new JTextArea[100];
-                nrodiscos=new JTextArea[100];
-                estados=new JTextArea[100];
-                while (j<100)
+                ids=new JTextArea[1000];
+                totalpgs=new JTextArea[1000];
+                totalrams=new JTextArea[1000];
+                nrodiscos=new JTextArea[1000];
+                estados=new JTextArea[1000];
+                while (j<1000)
                 {
                   ids[j]=new JTextArea();
                   totalpgs[j]=new JTextArea();
