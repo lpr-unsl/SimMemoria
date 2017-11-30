@@ -7,12 +7,14 @@ package proyecto2so;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -87,23 +89,36 @@ public class Interfaz extends JFrame implements ActionListener{
     
     //------Inicio------------------------------
       JPanel inicio=new JPanel();
-      JTextArea textarea00=new JTextArea("Introduzca el nro de marcos que desea en memoria ppal:_");
+      JTextArea textarea00=new JTextArea();
       JButton crearMarco=new JButton("crear marcos");
-      JLabel inicioLabel=new JLabel("Inicio");
+      JLabel inicioLabel=new JLabel("Introduzca el nro de marcos que desea en memoria ppal");
     //---------------------------------------------  
     public void start(){
-          setSize(600,400);
+          setSize(600,200);
 	  setResizable(true);
           setDefaultCloseOperation(EXIT_ON_CLOSE);
-          this.inicio.setLayout(new GridLayout(3,1));
-          this.inicio.add(inicioLabel);
-          this.inicio.add(textarea00);
-          this.inicio.add(crearMarco);
+          inicio.setLayout(new BorderLayout());
+          textarea00.setEditable(true);
+	  textarea00.setLineWrap(true);
+          textarea00.setWrapStyleWord(true);
+          textarea00.setFont(new Font("Arial ", Font.BOLD, 14));
+          textarea00.setBorder(BorderFactory.createLineBorder(Color.black));
+          textarea00.setBackground(Color.white);
+          textarea00.setForeground(Color.black);
+          JScrollPane scrollpane00= new JScrollPane(textarea00,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+            ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+          inicioLabel.setFont(new Font("Arial ", Font.BOLD, 18));
+          inicioLabel.setBorder(BorderFactory.createRaisedBevelBorder());
+          this.crearMarco.setFont(new Font("Arial ", Font.BOLD, 18));
+          this.crearMarco.setBorder(BorderFactory.createRaisedBevelBorder());
           this.crearMarco.addActionListener(this);
+          inicio.add(inicioLabel,BorderLayout.PAGE_START);
+          inicio.add(scrollpane00,BorderLayout.CENTER);
+          inicio.add(crearMarco,BorderLayout.PAGE_END);
           add(this.inicio);
           setVisible(true);
     }
-    public void Go(){
+    public void Go(int nroMarcos){
                    
                 setSize(600,400);
 	 	setResizable(true);
@@ -114,9 +129,29 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelppal.add(panelCenter);
                 this.panelppal.add(panelWest);
                 //---PANEL EAST------------------------------
+                JTextArea[] marcos=new JTextArea[nroMarcos];
+                int i=0;
+                while(i<nroMarcos){
+                marcos[i]=new JTextArea("marco "+i);
+                marcos[i].setEditable(true);
+		marcos[i].setLineWrap(true);
+		marcos[i].setWrapStyleWord(true);
+                marcos[i].setFont(new Font("Arial ", Font.BOLD, 18));
+                marcos[i].setBorder(BorderFactory.createLineBorder(Color.black));
+                marcos[i].setBackground(Color.white);
+                marcos[i].setForeground(Color.black);
+                i++;
+                }
+                JPanel ram=new JPanel();
+                ram.setLayout(new GridLayout(nroMarcos,1));
                 this.panelEast.setLayout(new BorderLayout());
                 this.panelEast.add(label0,BorderLayout.PAGE_START);
-                this.panelEast.add(scrollpane1,BorderLayout.CENTER);
+                i=0;
+                while(i<nroMarcos){
+                     ram.add(marcos[i]);
+                     i++;
+                }
+                 this.panelEast.add(ram,BorderLayout.CENTER);
                 //-------------------------------------------
                 //---PANEL CENTER----------------------------
                 this.panelCenter.setLayout(new GridLayout(2,1));
@@ -190,7 +225,9 @@ public class Interfaz extends JFrame implements ActionListener{
 		Object src=e.getSource();
 	        if (src.equals(crearMarco)){
                        inicio.setVisible(false);
-                       this.Go();
+                       String s=textarea00.getText();
+                       int n=Integer.parseInt(s);
+                       this.Go(n);
                     
                 }
                 
