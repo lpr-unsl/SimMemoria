@@ -30,6 +30,7 @@ public class Interfaz extends JFrame implements ActionListener{
     
     //------manejador de memoria--------
      Manejador manejador;
+     int nroPaginas_inicial;
      JTextArea[] marcos;
     //--------------------------------------
     
@@ -55,13 +56,13 @@ public class Interfaz extends JFrame implements ActionListener{
     JTextArea[] virtualids;
     JTextArea[] virtualpags;
     
-    JTextArea textarea2=new JTextArea("Ejecutado:_ P11"); //Pantalla procesador
+    JTextArea textarea2=new JTextArea(""); //Pantalla procesador
     JPanel panelWest=new JPanel();
-    JButton siguiente=new JButton("siguiente");//ejecutar siguiente proceso en la cola de listos
+    JButton siguiente=new JButton("ejecutar siguiente");//ejecutar siguiente proceso en la cola de listos
     JTextArea textarea3=new JTextArea("Nro de Proceso");
     JTextArea textarea4=new JTextArea("Nro de Pagina");
-    JButton ejecutar=new JButton("Ejecutar");//ejecutar proceso indicando nro de pagina y de proceso
-    JLabel label2=new JLabel("PROCESADOR");//Letrerito que dice procesador
+    JButton ejecutar=new JButton("Ejecutar pagina indicada");//ejecutar proceso indicando nro de pagina y de proceso
+    JLabel label2=new JLabel("                                                                        PROCESADOR");//Letrerito que dice procesador
     JLabel label3=new JLabel("                                                                    MEMORIA VIRTUAL");//Letrerito que dice memoria virtual
     JLabel label4=new JLabel("                               ID del Proceso");//Letrerito ID de tabla memoria virtual
     JLabel label5=new JLabel("                               Nro de Pagina");//Letrerito de tabla memoria virtual
@@ -105,7 +106,7 @@ public class Interfaz extends JFrame implements ActionListener{
     JTextArea textarea15=new JTextArea("CREAR PROCESO VA AQUI");//Para crear el proceso...
     JButton crearProceso=new JButton("crear proceso");
     
-    JTextArea nroPaginas=new JTextArea();
+    JTextArea nroPaginas=new JTextArea("");
     JLabel digaPaginas=new JLabel("Tipee el nro de paginas");
     JButton secuencial=new JButton("crear con ejecucion secuencial");
     JButton nosecuencial=new JButton("crear con ejecucion personalizada");
@@ -387,10 +388,16 @@ public class Interfaz extends JFrame implements ActionListener{
                     
                 }
                 if (src.equals(secuencial)){
-                       this.manejador.crearProceso();
+                       String s=this.nroPaginas.getText();
+                       if (s.equals("")){
+                           this.nroPaginas.setText("tipee un nro para comenzar");
+                       }
+                       else{
+                       int pags=Integer.parseInt(this.nroPaginas.getText());
+                       this.manejador.crearProceso(pags);
                        this.manejador.ImprimirProcesos();
                        this.manejador.ImprimirMemVirtual();
-                      
+                       }
                 }
                 
         }

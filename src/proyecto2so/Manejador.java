@@ -12,20 +12,15 @@ import java.util.ArrayList;
  * @author dearf
  */
 public class Manejador {
+    
     private int nroMarcos;
+    private int nroMarcosDisponibles;
     private Pagina[] marcos; //arreglo de marcos de pagina
     private ArrayList<Proceso> procesos;
+    private Pagina pagEjecutandose;//pagina que esta en el procesador
     private int PC; //id del proceso al que le toca ejecutarse
     private Interfaz I;
     private int nroProcesos;
-    public Manejador(int nroMarcos,Interfaz I){
-      this.nroMarcos=nroMarcos;
-      this.marcos=new Pagina[nroMarcos];
-      this.nroProcesos=0;
-      this.procesos=new ArrayList<>();
-      this.I=I;
-      this.inicializarMarcos();
-    }
     
     private void inicializarMarcos(){
     
@@ -38,9 +33,19 @@ public class Manejador {
     
     }
     
-    public void crearProceso(){
+    public Manejador(int nroMarcos,Interfaz I){
+      this.nroMarcos=nroMarcos;
+      this.nroMarcosDisponibles=nroMarcos;
+      this.marcos=new Pagina[nroMarcos];
+      this.nroProcesos=0;
+      this.procesos=new ArrayList<>();
+      this.I=I;
+      this.inicializarMarcos();
+    }
+   
+    public void crearProceso(int cuantasPag){
         Proceso p;  
-        p=new Proceso(procesos.size(),4);
+        p=new Proceso(procesos.size(),cuantasPag);
         procesos.add(p);
         this.nroProcesos++;
         int x=procesos.size()-1;
@@ -132,4 +137,27 @@ public class Manejador {
         
     }
     
+    public void ImprimirMemRAM()
+    {
+    
+    
+    }
+  
+    public void EjecutarSecuencial()
+    {
+      if (this.nroMarcosDisponibles>0)//Poner una de las paginas del proceso en ram, lo demas en virtual
+      {
+         //Meto la primera pagina del proceso recien creado en ram
+         this.procesos.get(this.procesos.size()-1).setPC(1);
+         this.procesos.get(this.procesos.size()-1).getPagina(0).setMemoria(0);
+         //ImprimirMemRAM();
+         //ImprimirMemVirtual();
+         //ImprimirProcesos();
+      }
+      {
+      
+      }
+    
+    
+    }
 }
