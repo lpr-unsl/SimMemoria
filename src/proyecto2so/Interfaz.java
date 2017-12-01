@@ -295,27 +295,27 @@ public class Interfaz extends JFrame implements ActionListener{
                   ids[j].setEditable(true);
 		  ids[j].setLineWrap(true);
 		  ids[j].setWrapStyleWord(true);
-                  ids[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  ids[j].setFont(new Font("Arial ", Font.BOLD, 12));
                   ids[j].setBorder(BorderFactory.createLineBorder(Color.black));
                   totalpgs[j].setEditable(true);
 		  totalpgs[j].setLineWrap(true);
 		  totalpgs[j].setWrapStyleWord(true);
-                  totalpgs[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  totalpgs[j].setFont(new Font("Arial ", Font.BOLD, 12));
                   totalpgs[j].setBorder(BorderFactory.createLineBorder(Color.black));
                   totalrams[j].setEditable(true);
 		  totalrams[j].setLineWrap(true);
 		  totalrams[j].setWrapStyleWord(true);
-                  totalrams[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  totalrams[j].setFont(new Font("Arial ", Font.BOLD, 12));
                   totalrams[j].setBorder(BorderFactory.createLineBorder(Color.black));
                   nrodiscos[j].setEditable(true);
 		  nrodiscos[j].setLineWrap(true);
 		  nrodiscos[j].setWrapStyleWord(true);
-                  nrodiscos[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  nrodiscos[j].setFont(new Font("Arial ", Font.BOLD, 12));
                   nrodiscos[j].setBorder(BorderFactory.createLineBorder(Color.black));
                   estados[j].setEditable(true);
 		  estados[j].setLineWrap(true);
 		  estados[j].setWrapStyleWord(true);
-                  estados[j].setFont(new Font("Arial ", Font.BOLD, 18));
+                  estados[j].setFont(new Font("Arial ", Font.BOLD, 12));
                   estados[j].setForeground(Color.blue);
                   estados[j].setBorder(BorderFactory.createLineBorder(Color.black));
                   id.add(ids[j]);
@@ -353,7 +353,14 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.crearProceso.addActionListener(this);
                 this.secuencial.addActionListener(this);
                 this.nosecuencial.addActionListener(this);
+                this.siguiente.addActionListener(this);
                 //--------Configuracion de todos los textarea-------------------
+                this.textarea2.setEditable(true);
+		this.textarea2.setLineWrap(true);
+		this.textarea2.setWrapStyleWord(true);
+                this.textarea2.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea2.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.textarea2.setForeground(Color.magenta);
                 this.textarea15.setEditable(true);
 		this.textarea15.setLineWrap(true);
 		this.textarea15.setWrapStyleWord(true);
@@ -399,6 +406,9 @@ public class Interfaz extends JFrame implements ActionListener{
                        this.manejador.ImprimirMemVirtual();
                        this.manejador.ImprimirMemRAM();
                        }
+                }
+                if (src.equals(siguiente)){
+                    this.manejador.EjecutarSecuencial();
                 }
                 
         }

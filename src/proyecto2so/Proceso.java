@@ -14,10 +14,11 @@ public class Proceso {
     private int pagRam; //nro de paginas en memoria ram
     private int pagVir; //nro de paginas en memoria virtual
     private Pagina[] paginas;
-    private int PC; //nro de pagina a la que le toca ejecutarse.
+    private int PCpag; //nro de pagina a la que le toca ejecutarse.
     
     public Proceso(int id, int nroPag){
         this.estado=0; //DEPENDE
+        this.PCpag=0;
         this.id=id;
         this.nroPag=nroPag;
         this.pagRam=0;
@@ -87,13 +88,23 @@ public class Proceso {
         this.paginas[ki] = p;
     }
 
-    public int getPC() {
-        return PC;
+    public int getPCpag() {
+        return PCpag;
     }
 
-    public void setPC(int PC) {
-        this.PC = PC;
+    public void setPCpag(int PC) {
+        this.PCpag = PC;
     }
     
+    public void actualizarPCpag(){
+         
+        if (this.PCpag<this.nroPag){
+            this.PCpag++;
+        }
+        if (this.PCpag==this.nroPag){
+            this.PCpag=-1;//Quiere decir q ya todas las paginas fueron ejecutadas 
+        }
+        
+    }
     
 }
