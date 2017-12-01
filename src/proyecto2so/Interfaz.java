@@ -164,10 +164,10 @@ public class Interfaz extends JFrame implements ActionListener{
                 marcos[i].setEditable(true);
 		marcos[i].setLineWrap(true);
 		marcos[i].setWrapStyleWord(true);
-                marcos[i].setFont(new Font("Arial ", Font.BOLD,12));
+                marcos[i].setFont(new Font("Arial ", Font.BOLD,18));
                 marcos[i].setBorder(BorderFactory.createLineBorder(Color.black));
                 marcos[i].setBackground(Color.white);
-                marcos[i].setForeground(Color.black);
+                marcos[i].setForeground(Color.blue);
                 i++;
                 }
                 JPanel ram=new JPanel();
@@ -227,7 +227,7 @@ public class Interfaz extends JFrame implements ActionListener{
 		  virtualpags[k].setWrapStyleWord(true);
                   virtualpags[k].setFont(new Font("Arial ", Font.BOLD, 18));
                   virtualpags[k].setBorder(BorderFactory.createLineBorder(Color.black));
-                  
+                  virtualpags[k].setForeground(Color.red);
                   virtualpag.add(virtualids[k]);
                   virtualpag.add(virtualpags[k]);
                   k++;
@@ -397,6 +397,7 @@ public class Interfaz extends JFrame implements ActionListener{
                        this.manejador.crearProceso(pags);
                        this.manejador.ImprimirProcesos();
                        this.manejador.ImprimirMemVirtual();
+                       this.manejador.ImprimirMemRAM();
                        }
                 }
                 

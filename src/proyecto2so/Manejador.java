@@ -50,6 +50,18 @@ public class Manejador {
         this.nroProcesos++;
         int x=procesos.size()-1;
         this.I.textarea15.setText("Se ha creado el proceso "+x);
+        
+        if(this.nroMarcosDisponibles>0){
+           this.procesos.get(this.procesos.size()-1).getPagina(0).setMemoria(0);
+           this.procesos.get(this.procesos.size()-1).setEstado(1);
+           this.procesos.get(this.procesos.size()-1).setPagRam(this.procesos.get(this.procesos.size()-1).getPagRam()+1);
+           this.procesos.get(this.procesos.size()-1).setPagVir(this.procesos.get(this.procesos.size()-1).getNroPag()-1); 
+           this.nroMarcosDisponibles=this.nroMarcosDisponibles-1;
+           }
+        else{
+        //skip
+        }
+        
         System.out.println(procesos.size());
     }
 
@@ -136,10 +148,21 @@ public class Manejador {
     }  
         
     }
-    
+        
     public void ImprimirMemRAM()
-    {
-    
+    {  int k=0;//apuntador al marco;
+       int i=0;
+       while (i<this.procesos.size()){
+              int j=0;
+              while(j<this.procesos.get(i).getNroPag()){
+                    if (this.procesos.get(i).getPagina(j).getMemoria()==0){
+                        this.I.marcos[k].setText("|--marco "+k+"--|"+"           "+"  "+i+"  "+j);
+                        k++;
+                    }
+                    j++;
+              }
+       i++;
+       }
     
     }
   

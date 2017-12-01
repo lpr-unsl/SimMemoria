@@ -33,7 +33,7 @@ public class Proceso {
        while (i<this.nroPag)
        {
          this.paginas[i]=new Pagina(this.id,i);
-         this.paginas[i].setMemoria(1);
+         this.paginas[i].setMemoria(1);//al crear una pagina por defecto esta en memoria virtual.
          i++;
        } 
     }
