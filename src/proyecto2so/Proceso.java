@@ -33,6 +33,7 @@ public class Proceso {
        while (i<this.nroPag)
        {
          this.paginas[i]=new Pagina(this.id,i);
+         this.paginas[i].setMemoria(1);
          i++;
        } 
     }
@@ -77,12 +78,13 @@ public class Proceso {
         this.pagVir = pagVir;
     }
 
-    public Pagina[] getPaginas() {
-        return paginas;
+    public Pagina getPagina(int i) {
+        return paginas[i];
     }
 
-    public void setPaginas(Pagina[] paginas) {
-        this.paginas = paginas;
+    public void setPaginas(int i, Pagina p) {
+        int ki=i;
+        this.paginas[ki] = p;
     }
 
     public int getPC() {

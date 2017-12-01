@@ -101,10 +101,18 @@ public class Interfaz extends JFrame implements ActionListener{
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     JScrollPane scrollpane8= new JScrollPane(textarea14,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
     ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    JLabel label12= new JLabel("Crear Proceso");
+    JLabel label12= new JLabel("\n                                CREAR PROCESO \n");
     JTextArea textarea15=new JTextArea("CREAR PROCESO VA AQUI");//Para crear el proceso...
     JButton crearProceso=new JButton("crear proceso");
     
+    JTextArea nroPaginas=new JTextArea();
+    JLabel digaPaginas=new JLabel("Tipee el nro de paginas");
+    JButton secuencial=new JButton("crear con ejecucion secuencial");
+    JButton nosecuencial=new JButton("crear con ejecucion personalizada");
+    JLabel blank=new JLabel("");
+    JLabel blank2=new JLabel("");      
+    JLabel tipeeNoSec=new JLabel("Tipee la secuencia que desea. Ej:1485");
+    JTextArea sec=new JTextArea("");
     //------Inicio------------------------------
       JPanel inicio=new JPanel();
       JTextArea textarea00=new JTextArea("");
@@ -323,14 +331,27 @@ public class Interfaz extends JFrame implements ActionListener{
                 westCenter.add(scrollestado);
                 JPanel westPageEnd=new JPanel();
                 westPageEnd.setLayout(new BorderLayout());
+                this.label12.setFont(new Font("Arial ", Font.BOLD, 18));
                 westPageEnd.add(label12, BorderLayout.PAGE_START);
-                westPageEnd.add(textarea15, BorderLayout.CENTER);
-                westPageEnd.add(crearProceso,BorderLayout.PAGE_END);
+                JPanel crearProc=new JPanel();
+                crearProc.setLayout(new GridLayout(6,2));
+                crearProc.add(digaPaginas);
+                crearProc.add(nroPaginas);
+                crearProc.add(blank);
+                crearProc.add(secuencial);
+                crearProc.add(tipeeNoSec);
+                crearProc.add(sec);
+                crearProc.add(blank2);
+                crearProc.add(nosecuencial);
+                westPageEnd.add(crearProc, BorderLayout.CENTER);
+                //westPageEnd.add(nosecuencial,BorderLayout.PAGE_END);
                 this.panelWest.add(starGrid, BorderLayout.PAGE_START);
                 this.panelWest.add(westCenter, BorderLayout.CENTER);
                 this.panelWest.add(westPageEnd,BorderLayout.PAGE_END);
                 //--------Configuracion de todos los botones--------------------
                 this.crearProceso.addActionListener(this);
+                this.secuencial.addActionListener(this);
+                this.nosecuencial.addActionListener(this);
                 //--------Configuracion de todos los textarea-------------------
                 this.textarea15.setEditable(true);
 		this.textarea15.setLineWrap(true);
@@ -365,10 +386,10 @@ public class Interfaz extends JFrame implements ActionListener{
                        this.Go(n);
                     
                 }
-                if (src.equals(crearProceso)){
+                if (src.equals(secuencial)){
                        this.manejador.crearProceso();
                        this.manejador.ImprimirProcesos();
-                       //this.manejador.ImprimirMemVirtual();
+                       this.manejador.ImprimirMemVirtual();
                       
                 }
                 

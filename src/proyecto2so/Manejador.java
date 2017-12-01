@@ -98,8 +98,8 @@ public class Manejador {
     }
     
     public void ImprimirMemVirtual(){
-    
-                 if (this.nroProcesos==0){
+        int k=0;//indicador de fila de la tabla de memoria virtual
+        if (this.nroProcesos==0){
             
             //skip
         }
@@ -107,8 +107,25 @@ public class Manejador {
         int i=0;
         while(i<this.procesos.size())
          {
-             
-             
+            if (this.procesos.get(i).getPagVir()==0)
+            {
+              //skip
+            }
+            else
+            {
+             int j=0;
+        
+             while (j<this.procesos.get(i).getNroPag()){
+                    if (this.procesos.get(i).getPagina(j).getMemoria()==1)
+                    {
+                       this.I.virtualids[k].setText(this.procesos.get(i).getId()+""); 
+                       this.I.virtualpags[k].setText(this.procesos.get(i).getPagina(j).getNro()+"");
+                       System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
+                       k++;
+                    }
+                    j++;
+             }
+            }             
           i++;   
          }
     }  
