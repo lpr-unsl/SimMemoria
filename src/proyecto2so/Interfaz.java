@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -105,16 +106,17 @@ public class Interfaz extends JFrame implements ActionListener{
     JLabel label12= new JLabel("\n                                CREAR PROCESO \n");
     JTextArea textarea15=new JTextArea("CREAR PROCESO VA AQUI");//Para crear el proceso...
     JButton crearProceso=new JButton("crear proceso");
-    
     JTextArea nroPaginas=new JTextArea("");
     JLabel digaPaginas=new JLabel("Tipee el nro de paginas");
     JButton secuencial=new JButton("crear con ejecucion secuencial");
     JButton nosecuencial=new JButton("crear con ejecucion personalizada");
     JLabel blank=new JLabel("");
-    JLabel blank2=new JLabel("");      
-    JLabel tipeeNoSec=new JLabel("Tipee la secuencia que desea. Ej:1485");
+    JLabel blank2=new JLabel("Tipee el nro de paginas que desea");
+    JLabel blank3=new JLabel("");
+    JLabel tipeeNoSec=new JLabel("secuencia,Al final -00.Ejemplo:1-0-2-3-00");
     JTextArea sec=new JTextArea("");
-    //------Inicio------------------------------
+    JTextArea nroPaginasNoSec=new JTextArea("");
+    //------Inicio---------------------------------
       JPanel inicio=new JPanel();
       JTextArea textarea00=new JTextArea("");
       JButton crearMarco=new JButton("crear marcos");
@@ -335,7 +337,7 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.label12.setFont(new Font("Arial ", Font.BOLD, 18));
                 westPageEnd.add(label12, BorderLayout.PAGE_START);
                 JPanel crearProc=new JPanel();
-                crearProc.setLayout(new GridLayout(6,2));
+                crearProc.setLayout(new GridLayout(7,2));
                 crearProc.add(digaPaginas);
                 crearProc.add(nroPaginas);
                 crearProc.add(blank);
@@ -343,6 +345,8 @@ public class Interfaz extends JFrame implements ActionListener{
                 crearProc.add(tipeeNoSec);
                 crearProc.add(sec);
                 crearProc.add(blank2);
+                crearProc.add(nroPaginasNoSec);
+                crearProc.add(blank3);
                 crearProc.add(nosecuencial);
                 westPageEnd.add(crearProc, BorderLayout.CENTER);
                 //westPageEnd.add(nosecuencial,BorderLayout.PAGE_END);
@@ -354,13 +358,25 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.secuencial.addActionListener(this);
                 this.nosecuencial.addActionListener(this);
                 this.siguiente.addActionListener(this);
-                //--------Configuracion de todos los textarea-------------------
+                //--------Configuracion de todos los textarea y jlabel-------------------
                 this.textarea2.setEditable(true);
 		this.textarea2.setLineWrap(true);
 		this.textarea2.setWrapStyleWord(true);
                 this.textarea2.setFont(new Font("Arial ", Font.BOLD, 18));
                 this.textarea2.setBorder(BorderFactory.createLineBorder(Color.black));
                 this.textarea2.setForeground(Color.magenta);
+                this.nroPaginas.setEditable(true);
+		this.nroPaginas.setLineWrap(true);
+		this.nroPaginas.setWrapStyleWord(true);
+                this.nroPaginas.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.nroPaginas.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.nroPaginas.setForeground(Color.magenta);
+                this.nroPaginasNoSec.setEditable(true);
+		this.nroPaginasNoSec.setLineWrap(true);
+		this.nroPaginasNoSec.setWrapStyleWord(true);
+                this.nroPaginasNoSec.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.nroPaginasNoSec.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.nroPaginasNoSec.setForeground(Color.magenta);
                 this.textarea15.setEditable(true);
 		this.textarea15.setLineWrap(true);
 		this.textarea15.setWrapStyleWord(true);
@@ -410,6 +426,40 @@ public class Interfaz extends JFrame implements ActionListener{
                 if (src.equals(siguiente)){
                     this.manejador.EjecutarSecuencial();
                 }
+                if(src.equals(nosecuencial)){
+                   String secuencia=this.sec.getText();
+                   int n=Integer.parseInt(this.nroPaginasNoSec.getText());
+                   ArrayList<String> listTemp=new ArrayList<>();
+                   int[] arreglos_PCpag;
+                   String s,k,temp="";
+                   int i,g;
+                   i=0;
+                   while(i<=secuencia.length()){
+                   if (i<secuencia.length()-1){    
+                   if(Character.toString(secuencia.charAt(i)).equals("-")){
+                        listTemp.add(temp);
+                        //System.out.print("i:_"+i+" temp:_"+temp+" ");
+                        temp="";
+                     }else{
+                          temp=temp+Character.toString(secuencia.charAt(i));
+                      }
+                   }
+                   else{
+                    listTemp.add(Character.toString(secuencia.charAt(secuencia.length()-1)));
+                    int x=secuencia.length()-1;
+                   //System.out.print("i:_"+x+" temp:_"+listTemp.get(listTemp.size()-1)+" ");
+                   }
+                    i++;
+                   }
+                  //Ahora armo el arreglo de PCpag
+                  i=0;
+                  arreglos_PCpag=new int[listTemp.size()-2];
+                  while(i<arreglos_PCpag.length){
+                     arreglos_PCpag[i]=Integer.parseInt(listTemp.get(i));
+                     System.out.print("arreglos["+i+"]:_____"+arreglos_PCpag[i]+"\n");
+                     i++;
+                   }
+             }
                 
         }
 }
