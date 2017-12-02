@@ -247,10 +247,12 @@ public class Manejador {
     {  
        this.ImprimirProcesos();
        if(this.PC==this.procesos.size()){
+           
         this.actualizarPC();
         System.out.println("this.PC:_"+this.PC+" es igual a el nro de procesos:_"+this.procesos.size());
        }
        else{
+           System.out.println("this.PC_"+this.PC);
            if (this.procesos.get(this.PC).getPCpag()==-1){//Si el proceso esta terminado
                System.out.println("El proceso se ha terminado");
        //    actualiza la informacion en la interfaz y en el proceso y sus paginas
@@ -264,10 +266,11 @@ public class Manejador {
              this.procesos.get(this.PC).setPagRam(0);
              this.procesos.get(this.PC).setPagVir(this.procesos.get(this.PC).getNroPag());
              this.ImprimirMemVirtual();
+             this.ImprimirProcesos();
              //Actualizar el estado del proceso
              this.procesos.get(this.PC).setEstado(4);
              this.I.estados[this.PC].setText("Terminado");
-             this.I.textarea2.setText("");
+             this.I.textarea2.setText("...");
              this.actualizarPC();
              
             
