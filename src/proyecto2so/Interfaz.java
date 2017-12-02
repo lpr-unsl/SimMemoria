@@ -59,7 +59,7 @@ public class Interfaz extends JFrame implements ActionListener{
     
     JTextArea textarea2=new JTextArea(""); //Pantalla procesador
     JPanel panelWest=new JPanel();
-    JButton siguiente=new JButton("ejecutar siguiente");//ejecutar siguiente proceso en la cola de listos
+    JButton siguiente=new JButton("Ejecutar siguiente");//ejecutar siguiente proceso en la cola de listos
     JTextArea textarea3=new JTextArea("Nro de Proceso");
     JTextArea textarea4=new JTextArea("Nro de Pagina");
     JButton ejecutar=new JButton("Ejecutar pagina indicada");//ejecutar proceso indicando nro de pagina y de proceso
@@ -424,7 +424,7 @@ public class Interfaz extends JFrame implements ActionListener{
                        }
                 }
                 if (src.equals(siguiente)){
-                    this.manejador.EjecutarSecuencial();
+                    this.manejador.Ejecutar();
                 }
                 if(src.equals(nosecuencial)){
                    String secuencia=this.sec.getText();
@@ -456,9 +456,15 @@ public class Interfaz extends JFrame implements ActionListener{
                   arreglos_PCpag=new int[listTemp.size()-2];
                   while(i<arreglos_PCpag.length){
                      arreglos_PCpag[i]=Integer.parseInt(listTemp.get(i));
-                     System.out.print("arreglos["+i+"]:_____"+arreglos_PCpag[i]+"\n");
+                     //System.out.print("arreglos["+i+"]:_____"+arreglos_PCpag[i]+"\n");
                      i++;
                    }
+                  //Ahora llamo a crear el proceso...
+                       this.manejador.crearProceso_NoSecuencial(n,arreglos_PCpag);
+                       this.manejador.ImprimirProcesos();
+                       this.manejador.ImprimirMemVirtual();
+                       this.manejador.ImprimirMemRAM();
+                  
              }
                 
         }

@@ -21,9 +21,7 @@ public class Manejador {
     private int PC; //id del proceso al que le toca ejecutarse
     private Interfaz I;
     private int nroProcesos;
-    
-    
-    
+
     public Manejador(int nroMarcos,Interfaz I){
       this.nroMarcos=nroMarcos;
       this.nroMarcosDisponibles=nroMarcos;
@@ -89,7 +87,45 @@ public class Manejador {
         
         System.out.println(procesos.size());
     }
-
+     public void crearProceso_NoSecuencial(int cuantasPag,int[] pcPag){
+        int ii=0;
+        while(ii<pcPag.length){
+        System.out.println("i:_"+pcPag[ii]);
+        ii++;
+        }
+        Proceso p;  
+        p=new Proceso(procesos.size(),cuantasPag,pcPag);
+        procesos.add(p);
+        this.nroProcesos++;
+        int x=procesos.size()-1;
+        this.I.textarea15.setText("Se ha creado el proceso "+x);
+        
+        if(this.nroMarcosDisponibles>0){//Si hay espacio en memoria
+           this.procesos.get(this.procesos.size()-1).getPagina((this.procesos.get(this.procesos.size()-1).getPCpag())).setMemoria(0);
+           this.procesos.get(this.procesos.size()-1).setEstado(1);
+           this.procesos.get(this.procesos.size()-1).setPagRam(this.procesos.get(this.procesos.size()-1).getPagRam()+1);
+           this.procesos.get(this.procesos.size()-1).setPagVir(this.procesos.get(this.procesos.size()-1).getNroPag()-1); 
+           //Buscar un marco disponible, y colocar la pagina
+           int i=0;
+           int d;
+           boolean encontrado=false;
+           while((i<nroMarcos)&&(encontrado==false)){
+                 d=this.marcos[i].getMarcoDisp();
+                 if (d==0){//El marco i esta disponible
+                     this.marcos[i]=this.procesos.get(this.procesos.size()-1).getPagina((this.procesos.get(this.procesos.size()-1).getPCpag()));
+                     this.marcos[i].setMarcoDisp(1);
+                     encontrado=true;
+                     this.nroMarcosDisponibles=this.nroMarcosDisponibles-1;
+                 }
+                 i++;
+           }
+           }
+        else{//Sino hay espacio en memoria
+        //skip
+        }
+        
+        System.out.println(procesos.size());
+    }
     public int getNroProcesos() {
         return nroProcesos;
     }
@@ -151,7 +187,17 @@ public class Manejador {
          {
             if (this.procesos.get(i).getPagVir()==0)
             {
-              //skip
+             int j=0;
+        
+             while (j<this.procesos.get(i).getNroPag()){
+                 
+                       this.I.virtualids[k].setText(""); 
+                       this.I.virtualpags[k].setText("");
+                       //System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
+                       k++;
+                   
+                    j++;
+             }
             }
             else
             {
@@ -162,7 +208,7 @@ public class Manejador {
                     {
                        this.I.virtualids[k].setText(this.procesos.get(i).getId()+""); 
                        this.I.virtualpags[k].setText(this.procesos.get(i).getPagina(j).getNro()+"");
-                       System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
+                       //System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
                        k++;
                     }
                     j++;
@@ -171,7 +217,6 @@ public class Manejador {
           i++;   
          }
     }  
-        
     }
         
     public void ImprimirMemRAM()
@@ -192,16 +237,22 @@ public class Manejador {
        }
     
     }
-  
-    public void EjecutarSecuencial()
-    {
-     if(this.PC==this.procesos.size()){
+    
+    public void EjecutarAgain(){
+           this.Ejecutar();
+    }
+    
+    
+    public void Ejecutar()
+    {  
+       this.ImprimirProcesos();
+       if(this.PC==this.procesos.size()){
         this.actualizarPC();
-        //this.EjecutarSecuencial();
-     }
-     if(this.PC<this.procesos.size()){
-        //if -->el proceso esta terminado
-          if (this.procesos.get(this.PC).getPCpag()==-1){
+        System.out.println("this.PC:_"+this.PC+" es igual a el nro de procesos:_"+this.procesos.size());
+       }
+       else{
+           if (this.procesos.get(this.PC).getPCpag()==-1){//Si el proceso esta terminado
+               System.out.println("El proceso se ha terminado");
        //    actualiza la informacion en la interfaz y en el proceso y sus paginas
              this.BorrarMarcos(this.PC);
              //Actualizar la informacion de las paginas del proceso.
@@ -216,38 +267,39 @@ public class Manejador {
              //Actualizar el estado del proceso
              this.procesos.get(this.PC).setEstado(4);
              this.I.estados[this.PC].setText("Terminado");
+             this.I.textarea2.setText("");
              this.actualizarPC();
-             //this.EjecutarSecuencial();
-          }        
-        //if--->Si el proceso no esta terminado
-          if(this.procesos.get(this.PC).getPCpag()<this.procesos.get(this.PC).getNroPag()){
-        //      if--->Si(PCpag esta en memoria)
+             
+            
+          }       
+          
+           else{
+                //Ejecutar una pag del proceso cuyo id se indica en el PC.
+                //Si la pagina del proceso esta en RAM
                 if(this.procesos.get(this.PC).getPagina(this.procesos.get(this.PC).getPCpag()).getMemoria()==0){
-        //            ejecutar la pagina, actualizar info del proceso y la interfaz
-                      this.procesos.get(this.PC).setEstado(3);
-                      this.ImprimirProcesos();
-                      this.I.textarea2.setText("EJECUTANDO:_"+"     PROCESO:_     "+this.PC+"     PAGINA:_     "+this.procesos.get(this.PC).getPagina(this.procesos.get(this.PC).getPCpag()).getNro());
-                      this.procesos.get(this.PC).actualizarPCpag();
-                      //Actualizar el estado del proceso
-                      if (this.procesos.get(this.PC).getPCpag()==-1){
-                          this.procesos.get(this.PC).setEstado(4);
-                      }
-                      if(this.procesos.get(this.PC).getPCpag()<this.procesos.get(this.PC).getNroPag()){
-                          this.procesos.get(this.PC).setEstado(1);
-                      }
-        //            actualizar el pc del manejador
-                      this.ImprimirMemVirtual();
-                      this.actualizarPC();
+                   System.out.println("La pagina esta en memoria RAM...Ejecutando...");
+                   this.procesos.get(this.PC).setEstado(3);
+                   this.I.estados[this.PC].setText("Ejecutando");
+                   this.I.textarea2.setText("Ejecutando:_   PROCESO "+this.PC+"  PAGINA:_   "+this.procesos.get(this.PC).getPagina(this.procesos.get(this.PC).getPCpag()).getNro());                           
+              
+                   this.procesos.get(this.PC).actualizarPCpag();
+                  
+                   System.out.println("PCpag:_ "+this.procesos.get(this.PC).getPCpag());
+                   this.procesos.get(this.PC).setEstado(1);
+                   this.actualizarPC();
                 }
-     
-        //      if--->Si(PCpag no esta en memoria)
-        //            Busco la pagina de la memoria virtual y la pongo en RAM
-        //            Pcpag queda igual (se ejecutara cuando el procesador se le asigne otra vez al proceso)
-        //            actualizo PC del manejador
-        //            this.EjecutarSecuencial();        
-          } 
-     }     
-    }
+                else{//Sino esta en memoria, la mando a poner en memoria y la ejecuto
+                     System.out.println("La pagina esta en memoria virtual, se buscara para ejecutar...id");
+                     this.UbicarPagEnRAM(this.PC);
+                     this.EjecutarAgain();                     
+                    }
+            
+         }
+       }
+       
+             
+   }     
+
     public void BorrarMarcos(int id){//Me das el id del proceso y se borran todos
                                     //los marcos que contienen paginas de ese proceso.
     int i=0;
@@ -271,7 +323,37 @@ public class Manejador {
     
     }
     
-    
+    public void UbicarPagEnRAM(int id){//Ubica la pagina indicada por PCpag en RAM
+                                       //Actualiza pantalla RAM, Virtual y de lista de procesos.
+        this.procesos.get(id).getPagina(this.procesos.get(id).getPCpag()).setMemoria(0);
+        this.procesos.get(id).setPagRam(this.procesos.get(id).getPagRam()+1);
+        this.procesos.get(id).setPagVir(this.procesos.get(id).getPagVir()-1);
+        if(this.nroMarcosDisponibles<this.nroMarcos){
+        //la meto en ram y ya.
+        //Buscar un marco disponible, y colocar la pagina
+                         int i=0;
+                         int d;
+                         boolean encontrado=false;
+                         while((i<nroMarcos)&&(encontrado==false)){
+                                d=this.marcos[i].getMarcoDisp();
+                                if (d==0){//El marco i esta disponible
+                                    this.marcos[i]=this.procesos.get(id).getPagina(this.procesos.get(id).getPCpag());
+                                    this.marcos[i].setMarcoDisp(1);
+                                    encontrado=true;
+                                    this.nroMarcosDisponibles=this.nroMarcosDisponibles-1;
+                                }
+                                i++;
+                         }
+        this.ImprimirMemRAM();
+        this.ImprimirProcesos();
+        this.ImprimirMemVirtual();
+        }
+        else{
+            //skip
+        
+        }
+        
+    }
     
     
 }

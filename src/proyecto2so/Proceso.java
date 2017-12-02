@@ -14,7 +14,11 @@ public class Proceso {
     private int pagRam; //nro de paginas en memoria ram
     private int pagVir; //nro de paginas en memoria virtual
     private Pagina[] paginas;
-    private int PCpag; //nro de pagina a la que le toca ejecutarse.
+    private int PCpag; //Ejecucion secuencia:_nro de pagina a la que le toca ejecutarse.
+    private int PCpointer;//apuntador al elemento del arreglo de sec                   
+    private boolean secuencial;
+    private int[] pcPag_arreglo;//arreglo que tiene la secuencia de ejecucion en caso de elegir ejecucion personalizada
+   
     
     public Proceso(int id, int nroPag){
         this.estado=0; //DEPENDE
@@ -23,9 +27,27 @@ public class Proceso {
         this.nroPag=nroPag;
         this.pagRam=0;
         this.pagVir=nroPag;
+        this.secuencial=true;
         this.paginas=new Pagina[nroPag];
         this.inicializarPaginas();
+        
     };
+    
+    public Proceso(int id,int nroPag, int[] PCpag){
+        this.estado=0; //DEPENDE
+        this.id=id;
+        this.nroPag=nroPag;
+        this.pagRam=0;
+        this.pagVir=nroPag;
+        this.secuencial=false;
+        this.paginas=new Pagina[nroPag];
+        this.pcPag_arreglo=new int[nroPag];
+        this.pcPag_arreglo=PCpag;
+        this.PCpointer=0;
+        this.PCpag=pcPag_arreglo[PCpointer];
+        this.secuencial=false;
+        this.inicializarPaginas();
+    }
     
     private void inicializarPaginas()
     
@@ -89,15 +111,21 @@ public class Proceso {
     }
 
     public int getPCpag() {
+        
         return PCpag;
     }
 
     public void setPCpag(int PC) {
+    
         this.PCpag = PC;
+        
+      
     }
     
+    
+    
     public void actualizarPCpag(){
-         
+     if (this.secuencial==true){    
         if (this.PCpag<this.nroPag){
             this.PCpag++;
         }
@@ -106,5 +134,24 @@ public class Proceso {
         }
         
     }
+  
+    else{
+          
+            this.PCpointer++;
+            if(this.PCpointer<this.pcPag_arreglo.length){
+            this.PCpag=this.pcPag_arreglo[PCpointer];
+            }
+        
+        if (this.PCpointer==this.pcPag_arreglo.length){
+            this.PCpag=-1;//Quiere decir q ya todas las paginas fueron ejecutadas 
+        }
+
+    }
+}
+
+    public boolean isSecuencial() {
+        return secuencial;
+    }
+    
     
 }
