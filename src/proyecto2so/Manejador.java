@@ -21,6 +21,7 @@ public class Manejador {
     private ArrayList<Proceso> procesos;
     private Pagina pagEjecutandose;//pagina que esta en el procesador
     private int PC; //id del proceso al que le toca ejecutarse
+    private int PC2;
     private Interfaz I;
     private int nroProcesos;
 
@@ -63,7 +64,9 @@ public class Manejador {
           this.PC++;
        }
        if (this.PC==this.procesos.size()){
-          this.PC=0; 
+          
+           this.PC=this.PC2;
+          
        }
     }
     
@@ -303,7 +306,7 @@ public class Manejador {
              this.procesos.get(idP).setEstado(4);
              this.I.estados[idP].setText("Terminado");
              this.I.textarea2.setText("...");
-             this.actualizarPC();
+             //this.actualizarPC();
              
             
           }       
@@ -326,7 +329,7 @@ public class Manejador {
                   
                    System.out.println("PCpag:_ "+this.procesos.get(idP).getPCpag());
                    this.procesos.get(idP).setEstado(1);
-                   this.actualizarPC();
+                   //this.actualizarPC();
                 }
                 else{//Sino esta en memoria, la mando a poner en memoria y la ejecuto
                      System.out.println("La pagina esta en memoria virtual, se buscara para ejecutar...id");
@@ -369,6 +372,7 @@ public class Manejador {
              this.procesos.get(this.PC).setEstado(4);
              this.I.estados[this.PC].setText("Terminado");
              this.I.textarea2.setText("...");
+             this.PC2=this.PC+1;
              this.actualizarPC();
              
             
