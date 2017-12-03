@@ -269,7 +269,77 @@ public class Manejador {
     public void EjecutarAgain(){
            this.Ejecutar();
     }
-    
+   public void EjecutarAgain2(int idProc, int nroPag){
+           this.Ejecutar2(idProc,nroPag);
+    }
+     public void Ejecutar2(int idProc, int nroPag)
+    {  
+       int idP=idProc;
+       int nroPg=nroPag;
+       
+       this.ImprimirProcesos();
+       if(idP==this.procesos.size()){
+           
+        this.actualizarPC();
+        System.out.println("this.PC:_"+idP+" es igual a el nro de procesos:_"+this.procesos.size());
+       }
+       else{
+           System.out.println("idP_"+idP);
+           if (this.procesos.get(idP).getPCpag()==-1){//Si el proceso esta terminado
+               System.out.println("El proceso se ha terminado");
+       //    actualiza la informacion en la interfaz y en el proceso y sus paginas
+             this.BorrarMarcos(idP);
+             //Actualizar la informacion de las paginas del proceso.
+             int i=0;
+             while(i<this.procesos.get(idP).getNroPag()){
+                   this.procesos.get(idP).getPagina(i).setMemoria(1);
+                   i++;
+             }
+             this.procesos.get(idP).setPagRam(0);
+             this.procesos.get(idP).setPagVir(this.procesos.get(idP).getNroPag());
+             this.ImprimirMemVirtual();
+             this.ImprimirProcesos();
+             //Actualizar el estado del proceso
+             this.procesos.get(idP).setEstado(4);
+             this.I.estados[idP].setText("Terminado");
+             this.I.textarea2.setText("...");
+             this.actualizarPC();
+             
+            
+          }       
+          
+           else{
+                //Ejecutar la pagina nroPg del proceso idP.
+                //Si la pagina del proceso esta en RAM
+                if(this.procesos.get(idP).getPagina(nroPg).getMemoria()==0){
+                   int marco=this.procesos.get(idP).getPagina(nroPg).getMarcoDonde();
+                   if (this.bitDeUso[marco]==0){
+                       this.bitDeUso[marco]=1;
+                   }
+                  
+                   System.out.println("La pagina esta en memoria RAM...Ejecutando...");
+                   this.procesos.get(idP).setEstado(3);
+                   this.I.estados[idP].setText("Ejecutando");
+                   this.I.textarea2.setText("Ejecutando:_   PROCESO "+idP+"  PAGINA:_   "+this.procesos.get(idP).getPagina(nroPg).getNro());                           
+              
+                   this.procesos.get(idP).actualizarPCpag();
+                  
+                   System.out.println("PCpag:_ "+this.procesos.get(idP).getPCpag());
+                   this.procesos.get(idP).setEstado(1);
+                   this.actualizarPC();
+                }
+                else{//Sino esta en memoria, la mando a poner en memoria y la ejecuto
+                     System.out.println("La pagina esta en memoria virtual, se buscara para ejecutar...id");
+                     this.UbicarPagEnRAM2(idP,nroPg);
+                     this.EjecutarAgain2(idP,nroPg);                     
+                    }
+            
+         }
+       }
+       
+             
+   }     
+
     
     public void Ejecutar()
     {  
@@ -363,7 +433,7 @@ public class Manejador {
     public void UbicarPagEnRAM(int id){//Ubica la pagina indicada por PCpag en RAM
                                        //Actualiza pantalla RAM, Virtual y de lista de procesos.
         
-        if(this.nroMarcosDisponibles!=0){
+        if(this.nroMarcosDisponibles>0){
         //la meto en ram y ya.
         //Buscar un marco disponible, y colocar la pagina
                          int i=0;
@@ -373,6 +443,9 @@ public class Manejador {
                                 d=this.marcos[i].getMarcoDisp();
                                 if (d==0){//El marco i esta disponible
                                     this.marcos[i]=this.procesos.get(id).getPagina(this.procesos.get(id).getPCpag());
+                                    this.procesos.get(id).getPagina(this.procesos.get(id).getPCpag()).setMemoria(0);
+                                    this.procesos.get(id).setPagRam(this.procesos.get(id).getPagRam()+1);
+                                    this.procesos.get(id).setPagVir(this.procesos.get(id).getPagVir()-1);
                                     this.marcos[i].setMarcoDisp(1);
                                     this.bitDeUso[i]=0;
                                     this.marcos[i].setMarcoDonde(i);
@@ -420,5 +493,66 @@ public class Manejador {
          
     }
     
-    
+      public void UbicarPagEnRAM2(int id,int nroPg){//Ubica la pagina indicada por PCpag en RAM
+                                       //Actualiza pantalla RAM, Virtual y de lista de procesos.
+        
+        if(this.nroMarcosDisponibles!=0){
+        //la meto en ram y ya.
+        //Buscar un marco disponible, y colocar la pagina
+                         int i=0;
+                         int d;
+                         boolean encontrado=false;
+                         while((i<nroMarcos)&&(encontrado==false)){
+                                d=this.marcos[i].getMarcoDisp();
+                                if (d==0){//El marco i esta disponible
+                                    this.marcos[i]=this.procesos.get(id).getPagina(nroPg);
+                                    this.procesos.get(id).getPagina(nroPg).setMemoria(0);
+                                    this.procesos.get(id).setPagRam(this.procesos.get(id).getPagRam()+1);
+                                    this.procesos.get(id).setPagVir(this.procesos.get(id).getPagVir()-1);
+                                    this.marcos[i].setMarcoDisp(1);
+                                    this.bitDeUso[i]=0;
+                                    this.marcos[i].setMarcoDonde(i);
+                                    encontrado=true;
+                                    this.nroMarcosDisponibles=this.nroMarcosDisponibles-1;
+                                }
+                                i++;
+                         }
+         System.out.println("Nro de marcos disponibles:_"+this.nroMarcosDisponibles);                
+         this.ImprimirMemRAM();
+         this.ImprimirProcesos();
+         this.ImprimirMemVirtual();
+        }
+        else{//Si la memoria esta full, se usa el algoritmo del reloj
+             
+             while(this.bitDeUso[this.bitPointer]!=0){
+                   this.bitDeUso[this.bitPointer]=0;
+                   this.actualizarBitPointer();
+             }
+             System.out.println("se tiene q meter en el marco:_"+this.bitPointer);
+             //bitPointer queda apuntando al marco al que hay q reemplazar
+             //La pagina que esta en el marco que voy a reemplazar, la pongo en memoria virtual
+             this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).getPagina(this.marcos[bitPointer].getNro()).setMemoria(1);
+             this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).setPagRam( this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).getPagRam()-1);
+             this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).setPagVir( this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).getPagVir()+1);
+             if( this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).getPagRam()==0){
+                 this.procesos.get(this.marcos[this.bitPointer].getIdProceso()).setEstado(2);
+             }
+             //Ahora se pone la pagina que se queria meter 
+             this.marcos[bitPointer]=this.procesos.get(id).getPagina(nroPg);
+             this.procesos.get(id).getPagina(nroPg).setMemoria(0);
+             if(this.procesos.get(id).getPagRam()==0){
+                this.procesos.get(id).setEstado(1);
+             }
+             this.procesos.get(id).setPagRam(this.procesos.get(id).getPagRam()+1);
+             this.procesos.get(id).setPagVir(this.procesos.get(id).getPagVir()-1);
+             this.marcos[bitPointer].setMarcoDisp(1);
+             this.marcos[bitPointer].setMarcoDonde(bitPointer);
+             this.bitDeUso[bitPointer]=0;
+             this.ImprimirMemRAM();
+             this.ImprimirProcesos();
+             this.ImprimirMemVirtual();
+             this.actualizarBitPointer();
+        }
+         
+    }
 }

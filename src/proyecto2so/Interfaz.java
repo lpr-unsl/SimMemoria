@@ -60,8 +60,10 @@ public class Interfaz extends JFrame implements ActionListener{
     JTextArea textarea2=new JTextArea(""); //Pantalla procesador
     JPanel panelWest=new JPanel();
     JButton siguiente=new JButton("Ejecutar siguiente");//ejecutar siguiente proceso en la cola de listos
-    JTextArea textarea3=new JTextArea("Nro de Proceso");
-    JTextArea textarea4=new JTextArea("Nro de Pagina");
+    JTextArea textarea3=new JTextArea();
+    JTextArea textarea4=new JTextArea();
+    JLabel textarea3Label=new JLabel("Indique Nro de Proceso");
+    JLabel textarea4Label=new JLabel("Indique Nro de Pagina");
     JButton ejecutar=new JButton("Ejecutar pagina indicada");//ejecutar proceso indicando nro de pagina y de proceso
     JLabel label2=new JLabel("                                                                        PROCESADOR");//Letrerito que dice procesador
     JLabel label3=new JLabel("                                                                    MEMORIA VIRTUAL");//Letrerito que dice memoria virtual
@@ -114,7 +116,7 @@ public class Interfaz extends JFrame implements ActionListener{
     JLabel blank2=new JLabel("Tipee el nro de paginas que desea");
     JLabel blank3=new JLabel("");
     JLabel tipeeNoSec=new JLabel("secuencia,Al final -00.Ejemplo:1-0-2-3-00");
-    JTextArea sec=new JTextArea("");
+    JTextArea sec=new JTextArea("-00");
     JTextArea nroPaginasNoSec=new JTextArea("");
     //------Inicio---------------------------------
       JPanel inicio=new JPanel();
@@ -189,11 +191,13 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelCenter.setLayout(new GridLayout(2,1));
                 JPanel center=new JPanel();//Mitad de arriba de panel center
                
-                center.setLayout(new GridLayout(6,1));
+                center.setLayout(new GridLayout(8,1));
                 center.add(label2);
                 center.add(textarea2);
                 center.add(siguiente);
+                center.add(textarea3Label);
                 center.add(textarea3);
+                center.add(textarea4Label);
                 center.add(textarea4);
                 center.add(ejecutar);
                 JPanel center2=new JPanel();//Mitad de abajo de panel center
@@ -355,9 +359,15 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.panelWest.add(westPageEnd,BorderLayout.PAGE_END);
                 //--------Configuracion de todos los botones--------------------
                 this.crearProceso.addActionListener(this);
+                this.crearProceso.setFont(new Font("Arial ", Font.BOLD, 14));
                 this.secuencial.addActionListener(this);
+                this.secuencial.setFont(new Font("Arial ", Font.BOLD, 13));
                 this.nosecuencial.addActionListener(this);
+                this.nosecuencial.setFont(new Font("Arial ", Font.BOLD, 13));
                 this.siguiente.addActionListener(this);
+                this.siguiente.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.ejecutar.addActionListener(this);
+                this.ejecutar.setFont(new Font("Arial ", Font.BOLD, 18));
                 //--------Configuracion de todos los textarea y jlabel-------------------
                 this.textarea2.setEditable(true);
 		this.textarea2.setLineWrap(true);
@@ -365,18 +375,45 @@ public class Interfaz extends JFrame implements ActionListener{
                 this.textarea2.setFont(new Font("Arial ", Font.BOLD, 18));
                 this.textarea2.setBorder(BorderFactory.createLineBorder(Color.black));
                 this.textarea2.setForeground(Color.magenta);
+                this.textarea3.setEditable(true);
+		this.textarea3.setLineWrap(true);
+		this.textarea3.setWrapStyleWord(true);
+                this.textarea3.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea3.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.textarea3.setForeground(Color.gray);
+                this.textarea3.setEditable(true);
+                
+		this.textarea4Label.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea4Label.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.textarea4Label.setForeground(Color.blue);
+		
+                this.textarea3Label.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea3Label.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.textarea3Label.setForeground(Color.blue);
+                this.textarea3.setEditable(true);
+		this.textarea4.setLineWrap(true);
+		this.textarea4.setWrapStyleWord(true);
+                this.textarea4.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.textarea4.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.textarea4.setForeground(Color.gray);
                 this.nroPaginas.setEditable(true);
 		this.nroPaginas.setLineWrap(true);
 		this.nroPaginas.setWrapStyleWord(true);
                 this.nroPaginas.setFont(new Font("Arial ", Font.BOLD, 18));
                 this.nroPaginas.setBorder(BorderFactory.createLineBorder(Color.black));
-                this.nroPaginas.setForeground(Color.magenta);
+                this.nroPaginas.setForeground(Color.red);
                 this.nroPaginasNoSec.setEditable(true);
 		this.nroPaginasNoSec.setLineWrap(true);
 		this.nroPaginasNoSec.setWrapStyleWord(true);
                 this.nroPaginasNoSec.setFont(new Font("Arial ", Font.BOLD, 18));
                 this.nroPaginasNoSec.setBorder(BorderFactory.createLineBorder(Color.black));
-                this.nroPaginasNoSec.setForeground(Color.magenta);
+                this.nroPaginasNoSec.setForeground(Color.black);
+                this.sec.setEditable(true);
+		this.sec.setLineWrap(true);
+		this.sec.setWrapStyleWord(true);
+                this.sec.setFont(new Font("Arial ", Font.BOLD, 18));
+                this.sec.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.sec.setForeground(Color.RED);
                 this.textarea15.setEditable(true);
 		this.textarea15.setLineWrap(true);
 		this.textarea15.setWrapStyleWord(true);
@@ -426,6 +463,14 @@ public class Interfaz extends JFrame implements ActionListener{
                 if (src.equals(siguiente)){
                     this.manejador.Ejecutar();
                 }
+                if (src.equals(ejecutar)){
+                   int idProc=Integer.parseInt(this.textarea3.getText());
+                   int nroPag=Integer.parseInt(this.textarea4.getText());
+                   System.out.println("nro proceso:_"+idProc+"nro pagina:_"+nroPag);
+                   this.manejador.Ejecutar2(idProc, nroPag);
+                }
+                
+                
                 if(src.equals(nosecuencial)){
                    String secuencia=this.sec.getText();
                    int n=Integer.parseInt(this.nroPaginasNoSec.getText());
