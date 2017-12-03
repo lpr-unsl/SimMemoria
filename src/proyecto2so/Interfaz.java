@@ -454,10 +454,15 @@ public class Interfaz extends JFrame implements ActionListener{
                        }
                        else{
                        int pags=Integer.parseInt(this.nroPaginas.getText());
+                       if ((pags<0)||(pags==0)){
+                          this.nroPaginas.setText("Tipee un nro mayor a cero");
+                       }
+                       else{
                        this.manejador.crearProceso(pags);
                        this.manejador.ImprimirProcesos();
                        this.manejador.ImprimirMemVirtual();
                        this.manejador.ImprimirMemRAM();
+                       }
                        }
                 }
                 if (src.equals(siguiente)){

@@ -208,7 +208,7 @@ public class Manejador {
     
     public void ImprimirMemVirtual(){
         int k=0;//indicador de fila de la tabla de memoria virtual
-        if (this.nroProcesos==0){
+        if (this.procesos.size()==0){
             
             //skip
         }
