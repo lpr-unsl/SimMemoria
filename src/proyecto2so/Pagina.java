@@ -12,6 +12,7 @@ package proyecto2so;
 public class Pagina {
     private int idProceso;// si el id=-1, entonces la pagina en realidad es un marco de memoria.
     private int nro;
+    private int marcoDonde;
     private int marcoDisp; //0--Marco disponible, 1--Marco no disponible.
     private int memoria;//0 memoria principal, 1 memoria virtual
     
@@ -20,6 +21,14 @@ public class Pagina {
      this.nro=nroPag;
      this.marcoDisp=0;
      this.memoria=1;
+    }
+
+    public int getMarcoDonde() {
+        return marcoDonde;
+    }
+
+    public void setMarcoDonde(int marcoDonde) {
+        this.marcoDonde = marcoDonde;
     }
 
     public int getIdProceso() {
