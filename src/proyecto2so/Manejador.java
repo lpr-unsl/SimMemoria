@@ -348,7 +348,7 @@ public class Manejador {
     {  
        this.ImprimirProcesos();
        if(this.PC==this.procesos.size()){
-           
+        this.PC2=0;
         this.actualizarPC();
         System.out.println("this.PC:_"+this.PC+" es igual a el nro de procesos:_"+this.procesos.size());
        }
