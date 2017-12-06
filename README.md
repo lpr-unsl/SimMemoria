@@ -1,10 +1,8 @@
 
-# Proyecto 2
-	
-	 Usted ha sido contratado para, haciendo uso de Java, llevar a cabo una simulación de la memoria de un sistema, en donde se hace uso ## de paginación y memoria virtual.
+# Proyecto 2  
 
-	 El cliente pide que sea capaz de indicar en cuantos marcos de páginas está dividida la memoria principal al empezar la ejecución del ## programa. Una vez iniciado el programa, se debe poder:
-	
+Usted ha sido contratado para, haciendo uso de Java, llevar a cabo una simulación de la memoria de un sistema, en donde se hace uso de paginación y memoria virtual. El cliente pide que sea capaz de indicar en cuantos marcos de páginas está dividida la memoria principal al empezar la ejecución del programa. Una vez iniciado el programa, se debe poder:	
+
  -	Crear procesos, de números de páginas variables, ubicando sus páginas en memoria, tanto principal como virtual.
  -	Decidir qué proceso pasa a ejecución. Para simplicidad del proyecto asuma que:
  •	Cuando un proceso entra en ejecución, logra ejecutar toda una página antes de ser interrumpido.
