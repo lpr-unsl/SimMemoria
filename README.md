@@ -1,6 +1,14 @@
 
 # Proyecto 2  
 
+![Java](https://usemoslinux.net/wp-content/uploads/2016/01/Java-Netbeans.png)
+
+## Proyecto de Sistemas Operativos para el curso Sistemas Operativos de la Escuela de Ingenieria Sistemas de la Universidad Metropolitana de Caracas
+
+![Java2](https://club28blog.files.wordpress.com/2017/10/imagen1.png)
+
+## Enunciado del Proyecto
+
 Usted ha sido contratado para, haciendo uso de Java, llevar a cabo una simulación de la memoria de un sistema, en donde se hace uso de paginación y memoria virtual. El cliente pide que sea capaz de indicar en cuantos marcos de páginas está dividida la memoria principal al empezar la ejecución del programa. Una vez iniciado el programa, se debe poder:	
 
  -	Crear procesos, de números de páginas variables, ubicando sus páginas en memoria, tanto principal como virtual.
@@ -22,3 +30,6 @@ Usted ha sido contratado para, haciendo uso de Java, llevar a cabo una simulaci�
 Aspectos importantes para la entrega:
  -	Se debe de poder compilar el proyecto entregado
  -	Debe hacer uso de interfaz gráfica para cualquier entrada solicitada y para mostrar la información requerida
+ 
+ # Implementacion en java
+![Java2](https://club28blog.files.wordpress.com/2017/10/imagen1.png)
