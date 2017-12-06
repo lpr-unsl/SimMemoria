@@ -1,4 +1,4 @@
-## Proyecto de Sistemas Operativos para el curso Sistemas Operativos de la Escuela de Ingenieria Sistemas de la Universidad Metropolitana de Caracas
+## Proyecto para el curso Sistemas Operativos de la Escuela de Ingenieria Sistemas de la Universidad Metropolitana de Caracas
 
 ![Java](https://usemoslinux.net/wp-content/uploads/2016/01/Java-Netbeans.png)
 
