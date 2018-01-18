@@ -2,7 +2,7 @@
 
 ![Java](https://usemoslinux.net/wp-content/uploads/2016/01/Java-Netbeans.png)
 
-![Java2](https://club28blog.files.wordpress.com/2017/12/imagen1.png)
+![Java2](https://club28blog.files.wordpress.com/2018/01/imagen2.png)
 
 ## Enunciado del Proyecto
 
@@ -29,4 +29,4 @@ Aspectos importantes para la entrega:
  -	Debe hacer uso de interfaz gráfica para cualquier entrada solicitada y para mostrar la información requerida
  
  # Implementacion en java
-![Java2](https://club28blog.files.wordpress.com/2017/12/imagen2.png)
+![Java2](https://club28blog.files.wordpress.com/2018/01/imagen2.png)
