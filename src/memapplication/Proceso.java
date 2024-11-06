@@ -2,12 +2,15 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ -----------ESTE ARCHIVO FUE COPIADO AL NUEVO PROGRAMA-------------
  */
-package proyecto2so;
+package memapplication;
 
-
+/**
+ *
+ * @author Romi
+ */
 public class Proceso {
-    
     private int id;
     private int estado;//0--nuevo,1--listo,2--listo supendido,3--ejecutando,4--terminado
     private int nroPag;// nro de paginas en total
@@ -18,7 +21,7 @@ public class Proceso {
     private int PCpointer;//apuntador al elemento del arreglo de sec                   
     private boolean secuencial;
     private int[] pcPag_arreglo;//arreglo que tiene la secuencia de ejecucion en caso de elegir ejecucion personalizada
-   
+    private String nombre;
     
     public Proceso(int id, int nroPag){
         this.estado=0; //DEPENDE
@@ -30,7 +33,7 @@ public class Proceso {
         this.secuencial=true;
         this.paginas=new Pagina[nroPag];
         this.inicializarPaginas();
-        
+        this.nombre="";
     };
     
     public Proceso(int id,int nroPag, int[] PCpag){
@@ -122,6 +125,14 @@ public class Proceso {
       
     }
     
+    public void setNombre(String n){
+        this.nombre=n;
+    }
+    
+    public String getNombre(){
+        return this.nombre;
+    }
+    
     
     
     public void actualizarPCpag(){
@@ -154,4 +165,5 @@ public class Proceso {
     }
     
     
+
 }

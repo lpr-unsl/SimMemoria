@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2so;
+package memapplication;
 
 /**
  *
- * @author dearf
+ * @author Romi
  */
-public class Proyecto2SO {
+public class MemApplication {
 
-    Interfaz I;
+        Interfaz I;
     public static void main(String[] args) {
         
         Interfaz I=new Interfaz();
-        I.start();
+        I.setVisible(true);
         
     }
     

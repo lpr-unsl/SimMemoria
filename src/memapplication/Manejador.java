@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2so;
+package memapplication;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 //El algoritmo de reemplazo de paginas es el de reloj.
 /**
  *
@@ -24,6 +26,8 @@ public class Manejador {
     private int PC2;
     private Interfaz I;
     private int nroProcesos;
+       
+    //private JTextArea cartel ;
 
     public Manejador(int nroMarcos,Interfaz I){
       this.nroMarcos=nroMarcos;
@@ -37,8 +41,10 @@ public class Manejador {
       this.inicializarMarcos();
       this.bitPointer=0;
       this.inicializarBitsDeUso();
+      
+      //this.cartel=new JTextArea("");
     }
-   
+ 
     private void inicializarBitsDeUso(){
         
         int i=0;
@@ -81,15 +87,19 @@ public class Manejador {
     
     }
     
-    public void crearProceso(int cuantasPag){
+    public void crearProceso(int cuantasPag, String n){
+        //System.out.println("entre a crear proceso con %d paginas" + cuantasPag);
         Proceso p;  
         p=new Proceso(procesos.size(),cuantasPag);
+        p.setNombre(n);
         procesos.add(p);
         this.nroProcesos++;
-        int x=procesos.size()-1;
-        this.I.textarea15.setText("Se ha creado el proceso "+x);
+        //System.out.println("cantidad de procesos %d" + nroProcesos);
+        
+        int x=procesos.size()-1;        
         
         if(this.nroMarcosDisponibles>0){//Si hay espacio en memoria
+            //System.out.println("entre a hay memoria disponible");
            this.procesos.get(this.procesos.size()-1).getPagina(0).setMemoria(0);
            this.procesos.get(this.procesos.size()-1).setEstado(1);
            this.procesos.get(this.procesos.size()-1).setPagRam(this.procesos.get(this.procesos.size()-1).getPagRam()+1);
@@ -114,9 +124,10 @@ public class Manejador {
         //skip
         }
         
-        System.out.println(procesos.size());
+        //System.out.println(procesos.size());
+        
     }
-     public void crearProceso_NoSecuencial(int cuantasPag,int[] pcPag){
+     public void crearProceso_NoSecuencial(int cuantasPag,int[] pcPag,String n){
         int ii=0;
         while(ii<pcPag.length){
         System.out.println("i:_"+pcPag[ii]);
@@ -124,14 +135,15 @@ public class Manejador {
         }
         Proceso p;  
         p=new Proceso(procesos.size(),cuantasPag,pcPag);
+        p.setNombre(n);
         procesos.add(p);
         this.nroProcesos++;
         int x=procesos.size()-1;
-        this.I.textarea15.setText("Se ha creado el proceso "+x);
+        //this.I.textarea15.setText("Se ha creado el proceso "+x);
         
         if(this.nroMarcosDisponibles>0){//Si hay espacio en memoria
            this.procesos.get(this.procesos.size()-1).getPagina((this.procesos.get(this.procesos.size()-1).getPCpag())).setMemoria(0);
-
+                      
            this.procesos.get(this.procesos.size()-1).setEstado(1);
            this.procesos.get(this.procesos.size()-1).setPagRam(this.procesos.get(this.procesos.size()-1).getPagRam()+1);
            this.procesos.get(this.procesos.size()-1).setPagVir(this.procesos.get(this.procesos.size()-1).getNroPag()-1); 
@@ -161,7 +173,7 @@ public class Manejador {
         return nroProcesos;
     }
     
-    public void ImprimirProcesos(){
+    public void ImprimirProcesos(){/////////////////////////////////////////////
         
         if (this.nroProcesos==0){
             
@@ -179,6 +191,7 @@ public class Manejador {
           if (n==0)
           {    
           this.I.estados[i].setText("Nuevo");
+          //this.I.estados[i].setText(this.Textarea_nombreProceso);
           }
           if (n==1)
           {
@@ -207,24 +220,28 @@ public class Manejador {
     }
     
     public void ImprimirMemVirtual(){
+        
         int k=0;//indicador de fila de la tabla de memoria virtual
         if (this.procesos.size()==0){
             
             //skip
         }
         else{
+            
         int i=0;
+        Proceso p=this.procesos.get(i);//////////////
         while(i<this.procesos.size())
          {
             if (this.procesos.get(i).getPagVir()==0)
             {
-             int j=0;
+             int j=1;//aca iba 0.. tuve que poner 1 para q no deje espacio en blanco cuando se elegia 1 pagina x proc
         
              while (j<this.procesos.get(i).getNroPag()){
                  
-                       this.I.virtualids[k].setText(""); 
+                       this.I.virtualids[k].setText("");
                        this.I.virtualpags[k].setText("");
                        //System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
+                      
                        k++;
                    
                     j++;
@@ -237,9 +254,15 @@ public class Manejador {
              while (j<this.procesos.get(i).getNroPag()){
                     if (this.procesos.get(i).getPagina(j).getMemoria()==1)
                     {
-                       this.I.virtualids[k].setText(this.procesos.get(i).getId()+""); 
-                       this.I.virtualpags[k].setText(this.procesos.get(i).getPagina(j).getNro()+"");
+                       
+                        //modifique------------------------------------------------------
+                       // this.I.getTextarea_nombreProceso().getText();
+                       this.I.virtualids[k].setText(this.procesos.get(i).getId()+" ("+this.procesos.get(i).getNombre()+")"); 
+                       
+                      // this.I.virtualids[k].setText(this.I.getTextarea_nombreProceso().getText());
+                       this.I.virtualpags[k].setText(this.procesos.get(i).getPagina(j).getNro()+"");//+""+this.procesos.get(i).getNombre());
                        //System.out.println("id proceso:_"+this.procesos.get(i).getId()+"id pagina:_"+this.procesos.get(i).getPagina(j).getNro());
+                       System.out.println(this.procesos.get(i).getNombre());//Mostrando lo que tiene la lista
                        k++;
                     }
                     j++;
@@ -254,6 +277,7 @@ public class Manejador {
     {  int k=0;//apuntador al marco;
        int i;//nro proceso
        int j;//nro de pagina
+      
        while (k<this.marcos.length){
              //this.I.marcos[k].setText("|--marco "+k+"--|"+"           "+"  "+i+"  "+j);
               if(this.marcos[k].getMarcoDisp()==0){//Si esta disponible lo imprimo tal cual
@@ -262,7 +286,9 @@ public class Manejador {
               else{//Si esta ocupado
                   i=this.marcos[k].getIdProceso();
                   j=this.marcos[k].getNro();
-                  this.I.marcos[k].setText("|--marco "+k+"--|"+"           "+"  "+i+"  "+j);
+                  Proceso p=this.procesos.get(i);
+                  this.I.marcos[k].setText("|--marco "+k+"--|"+"        "+"Proc"+i + " ("+ p.getNombre()+ ") " +" Pag("+j+")");
+                  
               }
        k++;
        }
@@ -305,7 +331,7 @@ public class Manejador {
              //Actualizar el estado del proceso
              this.procesos.get(idP).setEstado(4);
              this.I.estados[idP].setText("Terminado");
-             this.I.textarea2.setText("...");
+             //this.I.textarea2.setText("...");
              //this.actualizarPC();
              
             
@@ -323,7 +349,9 @@ public class Manejador {
                    System.out.println("La pagina esta en memoria RAM...Ejecutando...");
                    this.procesos.get(idP).setEstado(3);
                    this.I.estados[idP].setText("Ejecutando");
-                   this.I.textarea2.setText("Ejecutando:_   PROCESO "+idP+"  PAGINA:_   "+this.procesos.get(idP).getPagina(nroPg).getNro());                           
+                   //ver aca
+                   this.I.getTxtNombre().setText("Ejecutando:_   PROCESO "+idP+"  PAGINA:_   "+this.procesos.get(idP).getPagina(nroPg).getNro());
+                   //this.I.textarea2.setText("Ejecutando:_   PROCESO "+idP+"  PAGINA:_   "+this.procesos.get(idP).getPagina(nroPg).getNro());                           
               
                    this.procesos.get(idP).actualizarPCpag();
                   
@@ -376,7 +404,7 @@ public class Manejador {
              //Actualizar el estado del proceso
              this.procesos.get(this.PC).setEstado(4);
              this.I.estados[this.PC].setText("Terminado");
-             this.I.textarea2.setText("...");
+             this.I.getTxtNombre().setText("...");
              this.PC2=this.PC+1;
              this.actualizarPC();
              
@@ -395,7 +423,7 @@ public class Manejador {
                    System.out.println("La pagina esta en memoria RAM...Ejecutando...");
                    this.procesos.get(this.PC).setEstado(3);
                    this.I.estados[this.PC].setText("Ejecutando");
-                   this.I.textarea2.setText("Ejecutando:_   PROCESO "+this.PC+"  PAGINA:_   "+this.procesos.get(this.PC).getPagina(this.procesos.get(this.PC).getPCpag()).getNro());                           
+                   this.I.getTxtNombre().setText("Ejecutando:_   PROCESO "+this.PC+"  PAGINA:_   "+this.procesos.get(this.PC).getPagina(this.procesos.get(this.PC).getPCpag()).getNro());                           
               
                    this.procesos.get(this.PC).actualizarPCpag();
                   
@@ -564,4 +592,13 @@ public class Manejador {
         }
          
     }
+
+    void crearProceso(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public Proceso listaDeProcesos(){
+    int i=-1;
+    i++;
+        return procesos.get(i);
+}
 }

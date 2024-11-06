@@ -547,6 +547,11 @@
         <Component class="javax.swing.JButton" name="crearProceso">
           <Properties>
             <Property name="text" type="java.lang.String" value="::CREAR PROCESO::"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearProcesoActionPerformed"/>
@@ -669,6 +674,11 @@
             </Property>
             <Property name="text" type="java.lang.String" value="?"/>
             <Property name="toolTipText" type="java.lang.String" value="Ayuda!"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Jbutton_ayudaActionPerformed"/>
@@ -887,7 +897,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="boton_abrir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="  Abrir    "/>
+        <Property name="text" type="java.lang.String" value="Mostrar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boton_abrirActionPerformed"/>
@@ -1004,6 +1014,11 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="::Crear Marcos::"/>
             <Property name="toolTipText" type="java.lang.String" value="si no ingresa un valor, se crean aut. 10 marcos"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearMarcoActionPerformed"/>

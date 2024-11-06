@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2so;
+package memapplication;
 
 /**
- *
- * @author dearf
+ *---------ESTE ARCHIVO FUE COPIADO A NUESTRO PROYECTO---------
+ * @author Romi
  */
 public class Pagina {
     private int idProceso;// si el id=-1, entonces la pagina en realidad es un marco de memoria.
@@ -64,3 +64,4 @@ public class Pagina {
     }
     
 }
+
