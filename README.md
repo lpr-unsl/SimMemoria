@@ -1,6 +1,6 @@
 ## Para ejecutar el simulador corra el siguiente comando
 
-java -jar src/MemAplication.jar
+java -jar dist/MemApplication.jar
 
 ## Proyecto para el curso Sistemas Operativos de la Escuela de Ingenieria Sistemas de la Universidad Metropolitana de Caracas
 
