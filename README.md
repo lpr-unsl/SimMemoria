@@ -1,7 +1,8 @@
-## Para ejecutar el simulador corra el siguiente comando
-
-java -jar dist/MemApplication.jar
-
+## Para ejecutar el simulador usando netOSLab corra el siguiente comando
+```
+cd /root/Documents/SimMemoria
+jexec dist/MemApplication.jar
+```
 ## Proyecto para el curso Sistemas Operativos de la Escuela de Ingenieria Sistemas de la Universidad Metropolitana de Caracas
 
 ![Java](https://usemoslinux.net/wp-content/uploads/2016/01/Java-Netbeans.png)
